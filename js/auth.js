@@ -5,10 +5,19 @@ netlifyIdentity.init();
 const currentPage = window.location.pathname.split('/').pop() || 'index.html';
 const isLoginPage = currentPage === 'login.html';
 
+// 检查是否是验证/邀请/恢复流程（hash fragment）
+const hash = window.location.hash;
+const isVerificationFlow = hash.includes('confirmation_token') || 
+                          hash.includes('invite_token') || 
+                          hash.includes('recovery_token');
+
 // 认证状态检查
-// Netlify Identity 会自动处理 hash fragment 中的验证 token（#confirmation_token=xxx）
-// 我们只需要关注用户的登录状态，不需要手动检测验证流程
 netlifyIdentity.on('init', user => {
+  // 如果是验证流程，让 Netlify Identity 处理，不跳转
+  if (isVerificationFlow) {
+    return;
+  }
+
   if (!user && !isLoginPage) {
     // 未登录且不在登录页，跳转到登录页
     window.location.href = '/login.html';
