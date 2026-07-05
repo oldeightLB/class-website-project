@@ -34,7 +34,14 @@ netlifyIdentity.on('login', user => {
 
 // 退出登录
 function logout() {
+  // 清除 nf_jwt cookie（Netlify Identity 的已知问题：logout() 不会清除 cookie）
+  document.cookie = 'nf_jwt=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+  document.cookie = 'nf_jwt=; path=/; domain=' + window.location.hostname + '; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+  
+  // 调用 Netlify Identity 的 logout
   netlifyIdentity.logout();
+  
+  // 跳转到登录页
   window.location.href = '/login.html';
 }
 
