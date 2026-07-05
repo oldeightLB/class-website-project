@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>登录 - 班级网站</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script type="text/javascript" src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+</head>
+<body>
+  <div class="login-container">
+    <div class="login-box">
+      <h1>班级网站</h1>
+      <p>请登录以继续访问</p>
+      <button id="login-btn" class="btn-login">登录</button>
+      <button id="signup-btn" class="btn-signup">注册</button>
+    </div>
+  </div>
+  <script src="js/auth.js"></script>
+  <script>
+    document.getElementById('login-btn').addEventListener('click', () => {
+      netlifyIdentity.open('login');
+    });
+    document.getElementById('signup-btn').addEventListener('click', () => {
+      netlifyIdentity.open('signup');
+    });
+  </script>
+</body>
+</html>
