@@ -3,24 +3,54 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>登录 - 班级网站</title>
+  <title>班级网站</title>
   <link rel="stylesheet" href="css/style.css">
-  <script type="text/javascript" src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 <body>
-  <div class="login-container">
-    <div class="login-box">
-      <h1>班级网站</h1>
-      <p>请登录以继续访问</p>
-      <button id="login-btn" class="btn-login">登录</button>
-      <button id="signup-btn" class="btn-signup">注册</button>
+  <header>
+    <nav class="navbar">
+      <div class="nav-brand">班级网站</div>
+    </nav>
+  </header>
+
+  <main class="content">
+    <div class="login-section">
+      <h1>欢迎访问班级网站</h1>
+      <p>请登录以继续访问完整内容</p>
+      <div class="login-actions">
+        <button id="login-btn" class="btn-login">登录</button>
+        <button id="signup-btn" class="btn-signup">注册</button>
+      </div>
     </div>
-  </div>
-  <script src="js/auth.js"></script>
+  </main>
+
+  <!-- Netlify Identity Widget -->
+  <script type="text/javascript" src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   <script>
+    // 初始化 Widget
+    netlifyIdentity.init();
+    
+    // 登录成功事件 - 验证流程和普通登录都会触发
+    netlifyIdentity.on('login', user => {
+      // 清除URL中的hash（如果有验证token）
+      if (window.location.hash.includes('_token=')) {
+        history.replaceState(null, '', window.location.pathname);
+      }
+      window.location.href = '/';
+    });
+    
+    // 错误事件
+    netlifyIdentity.on('error', err => {
+      console.error('Netlify Identity error:', err);
+      alert('验证失败: ' + err.message);
+    });
+    
+    // 打开登录模态框
     document.getElementById('login-btn').addEventListener('click', () => {
       netlifyIdentity.open('login');
     });
+    
+    // 打开注册模态框
     document.getElementById('signup-btn').addEventListener('click', () => {
       netlifyIdentity.open('signup');
     });

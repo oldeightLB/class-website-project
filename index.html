@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>班级网站</title>
   <link rel="stylesheet" href="css/style.css">
-  <script type="text/javascript" src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 <body>
   <header>
@@ -18,18 +17,26 @@
     </nav>
   </header>
 
-  <main class="content">
+  <main id="main-content" class="content">
     <h1>欢迎访问班级网站</h1>
     <p>这里是班级的主页内容。</p>
     <!-- 在这里添加您的班级网站内容 -->
   </main>
 
+  <!-- Netlify Identity Widget -->
+  <script type="text/javascript" src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   <script src="js/auth.js"></script>
   <script>
-    // 显示用户邮箱
+    // 检查登录状态并显示/隐藏内容
     netlifyIdentity.on('init', user => {
+      const mainContent = document.getElementById('main-content');
       if (user) {
+        // 已登录，显示内容
+        mainContent.classList.add('authenticated');
         document.getElementById('user-email').textContent = user.email;
+      } else {
+        // 未登录，跳转到登录页
+        window.location.href = '/login.html';
       }
     });
 

@@ -9,6 +9,7 @@ body {
   line-height: 1.6;
   color: #333;
   background-color: #f5f5f5;
+  min-height: 100vh;
 }
 
 /* 导航栏 */
@@ -64,40 +65,38 @@ body {
   margin-bottom: 1rem;
 }
 
-/* 登录页 */
-.login-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-}
-
-.login-box {
-  background: white;
-  padding: 3rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+/* 登录区域 - 不全屏 */
+.login-section {
   text-align: center;
-  min-width: 320px;
+  padding: 4rem 2rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  margin: 4rem auto;
 }
 
-.login-box h1 {
+.login-section h1 {
   color: #2c3e50;
   margin-bottom: 0.5rem;
+  font-size: 2rem;
 }
 
-.login-box p {
+.login-section p {
   color: #666;
   margin-bottom: 2rem;
+  font-size: 1.1rem;
+}
+
+.login-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
 }
 
 .btn-login,
 .btn-signup {
-  display: block;
-  width: 100%;
-  padding: 0.75rem;
-  margin-bottom: 1rem;
+  padding: 0.75rem 2rem;
   border: none;
   border-radius: 4px;
   font-size: 1rem;
@@ -123,6 +122,15 @@ body {
   background-color: #27ae60;
 }
 
+/* 隐藏主内容直到登录 */
+.content.authenticated {
+  display: block;
+}
+
+.content:not(.authenticated) {
+  display: none;
+}
+
 /* 响应式设计 */
 @media (max-width: 768px) {
   .navbar {
@@ -130,8 +138,17 @@ body {
     gap: 1rem;
   }
 
-  .login-box {
-    margin: 1rem;
-    padding: 2rem;
+  .login-section {
+    margin: 2rem 1rem;
+    padding: 2rem 1rem;
+  }
+
+  .login-actions {
+    flex-direction: column;
+  }
+
+  .btn-login,
+  .btn-signup {
+    width: 100%;
   }
 }
